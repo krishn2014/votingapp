@@ -9,7 +9,6 @@ def make_digest(value):
 
 # Register your models here.
 class QuizzesAdmin(admin.ModelAdmin):
-
     
     list_display = ['idquiz', 'quiz', 'option_a', 'option_b', 'option_c', 'option_d', 'shareable_key']
     readonly_fields = ('idquiz', 'shareable_key')
