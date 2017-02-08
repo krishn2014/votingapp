@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="jumbotron">
+            <h2>Quiz</h2>
+            <p>{{ quiz.quiz }}</p>
+        </div>
+    </div>
+    <div class="form">
+        <div class="panel-body">
+            <form method="post" action="{% url 'quiz_view' quiz.shareable_key %}">
+{% csrf_token %}
+				<h4>Options</h4>
+                <ul>
+                <input type="radio" name="option" value="{{ quiz.option_a }}"> {{ quiz.option_a }}</ul>
+                <ul>
+                <input type="radio" name="option" value="{{ quiz.option_b }}"> {{ quiz.option_b }}</ul>
+                <ul>
+                <input type="radio" name="option" value="{{ quiz.option_c }}"> {{ quiz.option_c }}</ul>
+                <ul>
+                <input type="radio" name="option" value="{{ quiz.option_d }}"> {{ quiz.option_d }}</ul>
+                <input type="hidden" name="key" value="{{ quiz.shareable_key }}" />
+                {% if error %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endif %}
+                <p class="bs-component">
+                    <center>
+                        <input class="btn btn-success btn-md" type="submit" value="Submit" />
+                    </center>
+                </p>    
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

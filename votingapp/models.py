@@ -19,6 +19,7 @@ class Quizzes(models.Model):
         verbose_name = 'Quiz'
         verbose_name_plural='Quizzes'
 
+# model for teracking votes
 class Votes(models.Model):
     idvote = models.AutoField(db_column='idVote', primary_key=True)
     quiz = models.ForeignKey('Quizzes', db_column='quiz')
