@@ -12,7 +12,7 @@ class Quizzes(models.Model):
     option_b = models.CharField(db_column='optionB', max_length=60, blank=False) # Field name made lowercase.
     option_c = models.CharField(db_column='optionC', max_length=60, blank=False) # Field name made lowercase.
     option_d = models.CharField(db_column='optionD', max_length=60, blank=False) # Field name made lowercase.
-    shareable_key = models.CharField(db_column='shareableKey', max_length=50, blank=False) # Field name made lowercase.
+    shareable_key = models.CharField(db_column='shareableKey', max_length=50, blank=False, unique=True) # Field name made lowercase.
     class Meta:
         managed = True
         db_table = 'quizzes'
