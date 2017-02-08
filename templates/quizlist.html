@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+         <div class="list-group">
+        {% for quiz in quizzes %}
+            <a href="{% url 'results' quiz.shareable_key %}" class="list-group-item">{{ quiz.quiz }}</a>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

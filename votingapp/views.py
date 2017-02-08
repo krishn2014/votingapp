@@ -2,6 +2,7 @@ from django.shortcuts import render, render_to_response
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.http import Http404
+from django.db.models import Count
 
 from forms import *
 
@@ -49,3 +50,28 @@ def quiz_view(request, digest):
             return render(request, 'timesheets/messagebox.html', {'message': 'Error: Unable to send mail. Please cross check your email.'})
     else:
         return render(request, 'votequiz.html', {'quiz': quiz})
+
+@login_required(login_url="/login/")
+def quizlist(request):
+    user = request.user
+    if user.is_superuser:
+        return render(request, 'quizlist.html', {'quizzes': Quizzes.objects.all()})
+    else:
+        return render(request, 'quizlist.html', {'quizzes': Quizzes.objects.filter(votes__user=user)})
+
+@login_required(login_url="/login/")
+def results(request, digest):
+    user = request.user
+    quiz = get_quiz(digest)
+    if not user.is_superuser:
+        # validate if user can see the results --> only if he has voted for the quiz
+        try:
+            k = Votes.objects.get(quiz=quiz, user=user)
+        except Votes.DoesNotExist:
+            raise Http404
+
+    votes = Votes.objects.filter(quiz=quiz).values('option').annotate(Count('option')).order_by('option__count')
+    options = dict(map(lambda x: (x, 0), quiz.get_options()))
+    res = dict(map(lambda x: (x['option'], x['option__count']), votes))
+    options.update(res)
+    return render(request, 'results.html', {'quiz': quiz, 'votes': options})

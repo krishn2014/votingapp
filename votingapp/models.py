@@ -13,6 +13,10 @@ class Quizzes(models.Model):
     option_c = models.CharField(db_column='optionC', max_length=60, blank=False) # Field name made lowercase.
     option_d = models.CharField(db_column='optionD', max_length=60, blank=False) # Field name made lowercase.
     shareable_key = models.CharField(db_column='shareableKey', max_length=50, blank=False, unique=True) # Field name made lowercase.
+    
+    def get_options(self):
+        return [self.option_a, self.option_b, self.option_c, self.option_d]
+
     class Meta:
         managed = True
         db_table = 'quizzes'
@@ -25,3 +29,6 @@ class Votes(models.Model):
     quiz = models.ForeignKey('Quizzes', db_column='quiz')
     option = models.CharField(db_column='option', max_length=60, blank=False)
     user = models.ForeignKey(User)
+
+    class Mets:
+        unique_together = ('quiz', 'user',)
