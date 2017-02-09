@@ -131,3 +131,4 @@ os.path.join(BASE_DIR, "static"),
 ]
 
 LOGIN_REDIRECT_URL = '/'
+DEV_DOMAIN_NAME = 'localhost:8000'

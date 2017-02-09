@@ -18,7 +18,7 @@ class QuizzesAdmin(admin.ModelAdmin):
 
     # urllink represents partial url
     def urllink(self, obj):
-            return reverse('quiz_view', args=[obj.shareable_key]) if getattr(obj, 'shareable_key') else '' 
+            return settings.DEV_DOMAIN_NAME + reverse('quiz_view', args=[obj.shareable_key]) if getattr(obj, 'shareable_key') else '' 
 
     def save_model(self, request, obj, form, change):
         if change is False:
